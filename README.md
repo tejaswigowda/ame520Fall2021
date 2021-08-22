@@ -4,4 +4,4 @@ Whiteboard: https://docs.google.com/presentation/d/13kKGfmLrPY0pM3Z_UF6ZTWxoB122
 
 Repo: https://github.com/tejaswigowda/ame520Fall2021
 
-Syllabus: 
+Syllabus: https://github.com/tejaswigowda/ame520Fall2021/blob/main/AME%20520%20Fall21.Syllabus.pdf
