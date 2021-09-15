@@ -22,4 +22,5 @@ void loop()
     Serial.println("B");
     ttgo->tft->fillScreen(TFT_BLUE);
     delay(1000);
+    Serial.println(millis());
 }
