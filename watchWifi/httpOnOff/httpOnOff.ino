@@ -4,7 +4,7 @@
 
 TTGOClass *ttgo;
 
-char * HOSTNAME = "testing";
+char * HOSTNAME = "testing-ame520";
 char * WifiPASS = "12345678";
 
 #include <WiFi.h>
@@ -12,6 +12,7 @@ char * WifiPASS = "12345678";
 
 WebServer server(80);
 
+// Default Server IP: 192.168.4.1
 
 
 void setup() {

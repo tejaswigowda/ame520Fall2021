@@ -5,8 +5,8 @@
 TTGOClass *ttgo;
 
 
-char * HOSTNAME = "test";
-char * WifiPASS = "";
+char * HOSTNAME = "test-ame520";
+char * WifiPASS = "12345678";
 
 #include <WiFi.h>
 #include <WebServer.h>
@@ -28,9 +28,6 @@ void setup() {
     ttgo->tft->setTextFont(4);
     ttgo->tft->drawString("Ready",  5, 10);
 
-
-  pinMode(25, OUTPUT);
-  pinMode(26, OUTPUT);
     
 
     // Start Wifi AP
@@ -46,16 +43,12 @@ void setup() {
       ttgo->tft->fillScreen(TFT_WHITE);
        ttgo->tft->drawString("ON",  5, 10);  
        server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
-        digitalWrite(25, HIGH);
-        digitalWrite(26, HIGH);
     });
 
     server.on("/off", []() {
       ttgo->tft->fillScreen(TFT_WHITE);
        ttgo->tft->drawString("OFF",  5, 10);  
        server.send(200, "text/html", "<html><head></head><body><a href=\"./on\">on</a><br><a href=\"./off\">off</a></body><html>");
-        digitalWrite(25, LOW);
-       digitalWrite(26, LOW);
      });
 
  
