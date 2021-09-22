@@ -11,11 +11,11 @@ TFT_eSPI *tft;
 BMA *sensor;
 
 
-const char* ssid = "NETGEAR31";
-const char* password = "fluffywind2904";
+const char* ssid = "mocap";
+const char* password = "formocap";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://13.56.213.25:1234/sendData";
+const char* serverName = "http://192.168.2.8:8082/sendData";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -142,8 +142,8 @@ void loop() {
       int z = acc.z;
       String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z; 
       Serial.println(url);       
-     // response = httpGETRequest(url.c_str());
-     // Serial.println(response);
+      response = httpGETRequest(url.c_str());
+      Serial.println(response);
 
 
       

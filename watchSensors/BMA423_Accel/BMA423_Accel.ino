@@ -101,5 +101,5 @@ void loop()
         tft->setCursor(80, 160);
         tft->print("Z:"); tft->println(acc.z);
     }
-    delay(2000);
+    delay(200);
 }
