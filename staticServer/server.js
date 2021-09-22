@@ -7,7 +7,8 @@ var hostname = process.env.HOSTNAME || 'localhost';
 var port = 8082;
 
 app.get("/sendData", function (req, res) {
-  console.log("here");
+  console.log(req.query);
+  res.end("0");
 });
 
 app.use(methodOverride());
