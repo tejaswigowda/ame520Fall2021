@@ -15,19 +15,6 @@ function anypost(str) {
 }
 
 
-/*
-app.get("/sendData", function (req, res) {
-	console.log(req.query);
-	res.end("1	")
-});
-
-app.listen(3000, function () {
-	anypost("Example app listening on port 3000!");
-	if (Max) Max.outlet("ready");
-});
-*/
-
-
 const wss = new WebSocket.Server({ port: 3000})
 
 wss.on('connection', ws => {

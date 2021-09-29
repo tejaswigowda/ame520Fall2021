@@ -2,6 +2,7 @@
 
 #include <WiFi.h>
 //#include <HTTPClient.h>
+#include <WiFiMulti.h>
 #include <WiFiClientSecure.h>
 #include <WebSocketsClient.h>
 
@@ -11,8 +12,9 @@ TTGOClass *watch;
 TFT_eSPI *tft;
 BMA *sensor;
 
-String mac_address;
+String mac_address = "test";
 WebSocketsClient webSocket;
+WiFiMulti WiFiMulti;
 
 const char* ssid = "mocap";
 const char* password = "formocap";
@@ -154,20 +156,20 @@ void setup() {
     tft->drawString("BMA423 accel",  25, 50, 4);
     tft->setTextFont(4);
     tft->setTextColor(TFT_WHITE, TFT_BLACK);
-
-
-      WiFi.begin(ssid, password);
+  
+  
+  WiFiMulti.addAP(ssid, password);
+  
   Serial.println("Connecting");
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
+
+  while(WiFiMulti.run() != WL_CONNECTED) {
+    delay(100);
     Serial.print(".");
   }
-  Serial.println("");
-  Serial.print("Connected to WiFi network with IP Address: ");
-  Serial.println(WiFi.localIP());
- 
+
+   // mac_address = WiFiMulti.macAddress();
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
-    delay(500);
+   // delay(500);
   // server address, port and URL
   webSocket.begin("192.168.2.8", 3000, "/");
 
