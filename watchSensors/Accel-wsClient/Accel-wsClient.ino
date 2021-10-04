@@ -22,8 +22,8 @@ BMA *sensor;
 
 
 
-const char* ssid = "mocap";
-const char* password = "formocap";
+const char* ssid = "ame520";
+const char* password = "12345678";
 
 String mac_address;
 
@@ -182,7 +182,7 @@ void setup() {
 
   delay(500);
   // server address, port and URL
-  webSocket.begin("192.168.2.8", 3000, "/");
+  webSocket.begin("192.168.159.47", 3000, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);
