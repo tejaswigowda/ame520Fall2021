@@ -3,8 +3,6 @@
 const express = require("express");
 const app = express();
 const Max = require("max-api");
-const WebSocket = require('ws')
-
 
 function anypost(str) {
 	if (Max) {
@@ -14,12 +12,38 @@ function anypost(str) {
 	}
 }
 
+app.get("/sendData", function (req, res) {
+	console.log(req.query);
+	res.end("1	")
+});
 
-const wss = new WebSocket.Server({ port: 3000})
+app.get("/", function (req, res) {
+	let responseText = "";
+	if (Max) {
+		Max.getDict("pagestats")
+			.then((dict) => {
+				dict.accesses = dict.accesses ? dict.accesses + 1 : 1;
+				Max.updateDict("pagestats", "accesses", dict.accesses);
+				responseText += "<p>Hello, Max!</p>";
+				responseText += `<p>
+					This page has been loaded ${dict.accesses} ${dict.accesses === 1 ? "time" : "times"}.
+				</p>`;
+				responseText += `<p>
+					The slider is at ${dict.slider ? dict.slider : 0}
+				</p>`;
+				res.send(responseText);
+			})
+			.catch((err) => {
+				responseText += "<p>Had trouble connecting to Max</p>";
+				responseText += `<p>${err}</p>`;
+				res.send(responseText);
+			});
+	} else {
+		res.send("<p>Hello! This simple server is not running inside of Max.<p>");
+	}
+});
 
-wss.on('connection', ws => {
-  ws.on('message', message => {
-     anypost(`Received message => ${message}`)
-  })
-  ws.send('start');
-})
+app.listen(3000, function () {
+	anypost("Example app listening on port 3000!");
+	if (Max) Max.outlet("ready");
+});
