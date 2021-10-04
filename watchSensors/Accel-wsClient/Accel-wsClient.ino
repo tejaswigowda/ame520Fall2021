@@ -22,14 +22,11 @@ BMA *sensor;
 
 
 
-const char* ssid = "NETGEAR31";
-const char* password = "fluffywind2904";
+const char* ssid = "mocap";
+const char* password = "formocap";
 
 String mac_address;
 
-
-//Your Domain name with URL path or IP address with path
-const char* serverName = "http://192.168.0.196:1234/setValue";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -185,7 +182,7 @@ void setup() {
 
   delay(500);
   // server address, port and URL
-  webSocket.begin("192.168.0.197", 3000, "/");
+  webSocket.begin("192.168.2.8", 3000, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);

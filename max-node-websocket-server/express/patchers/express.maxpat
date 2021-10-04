@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 11,
+			"revision" : 8,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -125,13 +125,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-9",
-					"linecount" : 4,
+					"linecount" : 8,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 78.0, 561.5, 50.0, 62.0 ],
-					"text" : "dictionary u199007177"
+					"patching_rect" : [ 78.0, 561.5, 50.0, 116.0 ],
+					"text" : "\"{\\\"id\\\": \\\"A4:CF:12:24:E5:24\\\",\\\"x\\\":5,\\\"y\\\":86,\\\"z\\\":1016}\""
 				}
 
 			}
@@ -296,16 +296,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 70.0, 473.0, 193.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"autostart" : 0,
-						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
-						"watch" : 0
-					}
-,
-					"text" : "node.script express-node/server.js"
+					"patching_rect" : [ 70.0, 473.0, 173.0, 22.0 ],
+					"text" : "node.script express-node/ws.js"
 				}
 
 			}
@@ -595,14 +587,7 @@
 
 			}
  ],
-		"dependency_cache" : [ 			{
-				"name" : "server.js",
-				"bootpath" : "~/ame520Fall2021/max-node-server/express/express-node",
-				"patcherrelativepath" : "../express-node",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0
 	}
 
