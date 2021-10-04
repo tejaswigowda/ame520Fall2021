@@ -1,10 +1,15 @@
 
 
 #include <WiFi.h>
-//#include <HTTPClient.h>
 #include <WiFiMulti.h>
+#include <HTTPClient.h>
 #include <WiFiClientSecure.h>
 #include <WebSocketsClient.h>
+
+WiFiMulti WiFiMulti;
+WebSocketsClient webSocket;
+
+
 
 #define LILYGO_WATCH_2019_WITH_TOUCH 
 #include <LilyGoWatch.h>
@@ -12,15 +17,19 @@ TTGOClass *watch;
 TFT_eSPI *tft;
 BMA *sensor;
 
-String mac_address = "test";
-WebSocketsClient webSocket;
-WiFiMulti WiFiMulti;
 
-const char* ssid = "mocap";
-const char* password = "formocap";
+#include <Wire.h>
+
+
+
+const char* ssid = "NETGEAR31";
+const char* password = "fluffywind2904";
+
+String mac_address;
+
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://192.168.2.9:3000/sendData";
+const char* serverName = "http://192.168.0.196:1234/setValue";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -31,7 +40,6 @@ unsigned long lastTime = 0;
 unsigned long timerDelay = 10;
 
 String response;
-
 
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
@@ -95,6 +103,7 @@ void setup() {
 
     //Receive objects for easy writing
     tft = watch->tft;
+
     sensor = watch->bma;
 
     // Accel parameter structure
@@ -148,16 +157,15 @@ void setup() {
     // Enable BMA423 accelerometer
     sensor->enableAccel();
 
-    // You can also turn it off
-    // sensor->disableAccel();
 
     // Some display settings
     tft->setTextColor(random(0xFFFF));
-    tft->drawString("BMA423 accel",  25, 50, 4);
+    tft->drawString("BNO08x Quaternions",  5, 50, 4);
     tft->setTextFont(4);
     tft->setTextColor(TFT_WHITE, TFT_BLACK);
-  
-  
+
+
+   
   WiFiMulti.addAP(ssid, password);
   
   Serial.println("Connecting");
@@ -166,29 +174,40 @@ void setup() {
     delay(100);
     Serial.print(".");
   }
-
-   // mac_address = WiFiMulti.macAddress();
+  
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+ 
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
-   // delay(500);
+
+  mac_address = WiFi.macAddress();
+
+  delay(500);
   // server address, port and URL
-  webSocket.begin("192.168.2.8", 3000, "/");
+  webSocket.begin("192.168.0.197", 3000, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);
 
+  // use HTTP Basic Authorization this is optional remove if not needed
+  // webSocket.setAuthorization("user", "Password");
+
   // try ever 5000 again if connection has failed
   webSocket.setReconnectInterval(5000);
+
+    webSocket.sendTXT(String(millis()).c_str());
+
   
-
-
 }
 
 void loop() {
+    webSocket.loop();
  if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
 
-       Accel acc;
+      Accel acc;
 
     // Get acceleration data
       bool res = sensor->getAccel(acc);
@@ -204,15 +223,16 @@ void loop() {
       int x = acc.x;
       int y = acc.y;
       int z = acc.z;
-//      String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z; 
-//      Serial.println(url);       
-//      response = httpGETRequest(url.c_str());
-//      Serial.println(response);
 
-  
-      String url = "{\"id\": \"" + mac_address + ",\"x\":" + x + ",\"y\":" + y + ",\"z\":" + z + "}"; 
-      Serial.println(url);       
-      webSocket.sendTXT(url.c_str());
+
+     
+      String url = "{\"id\": \"" + mac_address + "\",\"x\":" + x + ",\"y\":" + y + ",\"z\":" + z + "}"; 
+     // Serial.println(url);       
+     // response = httpGETRequest(url.c_str());
+         webSocket.sendTXT(url.c_str());
+
+     // Serial.println(response);
+
       
 
 
@@ -222,4 +242,30 @@ void loop() {
     }
     lastTime = millis();
   }
+}
+
+String httpGETRequest(const char* serverName) {
+  HTTPClient http;
+    
+  // Your IP address with path or Domain name with URL path 
+  http.begin(serverName);
+  
+  // Send HTTP POST request
+  int httpResponseCode = http.GET();
+  
+  String payload = "{}"; 
+  
+  if (httpResponseCode>0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    payload = http.getString();
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  // Free resources
+  http.end();
+
+  return payload;
 }
