@@ -20,7 +20,14 @@ const wss = new WebSocket.Server({ port: 3000})
 wss.on('connection', ws => {
   ws.on('message', message => {
     // anypost(`${message}`)
-     Max.outlet(`${message}`)
+	var x = `${message}`
+    x = x.replace(/\\/g, ""); 
+
+  // x = x.replace(/\"/g, ""); 
+		anypost( x)
+
+//	x = JSON.parse(x);
+	Max.outlet(x)
   })
   ws.send('start');
 })
