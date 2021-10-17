@@ -179,10 +179,10 @@ void setup() {
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 
   mac_address = WiFi.macAddress();
-
+  mac_address = "test";
   delay(500);
   // server address, port and URL
-  webSocket.begin("192.168.2.8", 3000, "/");
+  webSocket.begin("192.168.2.9", 3000, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);
