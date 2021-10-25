@@ -18,15 +18,15 @@ BNO080 myIMU;
 
 
 
-const char* ssid = "NETGEAR31";
-const char* password = "fluffywind2904";
+const char* ssid = "AMEIoT";
+const char* password = "ameclass";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://13.56.213.25:1234/sendData";
+const char* serverName = "http://192.168.2.6:1234/sendData";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
-unsigned long lastTime = 0;
+unsigned long lastTime = 0;   
 // Timer set to 10 minutes (600000)
 //unsigned long timerDelay = 600000;
 // Set timer to 5 seconds (5000)
@@ -73,7 +73,7 @@ void setup() {
   // Start i2c and BNO080
   Wire.flush();   // Reset I2C
   myIMU.begin(BNO080_DEFAULT_ADDRESS, Wire);
-  Wire.begin(25, 26);
+  Wire.begin(22, 21);
 
    if (myIMU.begin() == false)
   {
