@@ -122,7 +122,7 @@ void loop() {
       tft->setCursor(80, 190);
       tft->print("W:"); tft->println(quatReal);
          
-      String url = String(serverName) + "?x=" + quatI + "&y=" + quatJ + "&z=" + quatK + "&w=" + quatReal + "&id=" + mac_address; 
+      String url = String(serverName) + "?x=" + quatI + "&y=" + quatJ + "&z=" + quatK + "&w=" + quatReal + "&id=" + macAddress; 
       Serial.println(url);       
       response = httpGETRequest(url.c_str());
       Serial.println(response);
