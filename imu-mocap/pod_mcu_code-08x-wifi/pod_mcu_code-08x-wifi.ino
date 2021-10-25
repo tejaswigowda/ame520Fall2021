@@ -124,10 +124,10 @@ void loop() {
   
       
      
-     // String url = String(serverName) + "?x=" + x + "&y=" + y + "&z=" + z; 
-     // Serial.println(url);       
-     // response = httpGETRequest(url.c_str());
-     // Serial.println(response);
+      String url = String(serverName) + "?x=" + quatI + "&y=" + quatJ + "&z=" + quatK + "&w=" + quatReal; 
+      Serial.println(url);       
+     response = httpGETRequest(url.c_str());
+      Serial.println(response);
 
 
       
