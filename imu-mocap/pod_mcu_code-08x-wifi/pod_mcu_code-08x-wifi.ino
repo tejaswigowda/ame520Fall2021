@@ -9,7 +9,7 @@
 TTGOClass *watch;
 TFT_eSPI *tft;
 BMA *sensor;
-
+String mac_address;
 
 #include <Wire.h>
 
@@ -65,6 +65,7 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+  mac_address = WiFi.macAddress();
  
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 
@@ -121,7 +122,7 @@ void loop() {
       tft->setCursor(80, 190);
       tft->print("W:"); tft->println(quatReal);
          
-      String url = String(serverName) + "?x=" + quatI + "&y=" + quatJ + "&z=" + quatK + "&w=" + quatReal; 
+      String url = String(serverName) + "?x=" + quatI + "&y=" + quatJ + "&z=" + quatK + "&w=" + quatReal + "&id=" + macAddress; 
       Serial.println(url);       
       response = httpGETRequest(url.c_str());
       Serial.println(response);
