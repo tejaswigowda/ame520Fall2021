@@ -48,6 +48,18 @@
 
 			init();
 			animate();
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost:3000');
+
+// Connection opened
+socket.addEventListener('open', function (event) {
+    socket.send('Hello Server!');
+});
+
+// Listen for messages
+socket.addEventListener('message', function (event) {
+    console.log('Message from server ', event.data);
+});
 
 			function init() {
 
@@ -55,7 +67,7 @@
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.set( 0, 100, -300 );
+				camera.position.set( 0, 100, 300 );
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xa0a0a0 );
