@@ -5,10 +5,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
+    <script src='mappings.js'></script>
 	</head>
 
 	<body>
     <script>
+      var wsServerIP = "192.168.0.193";
       var hash = window.location.hash.replace("#","");
       var args = hash.split(",")
       var fbxfile = args[0] || "ybot.fbx"
@@ -49,7 +51,7 @@
 			init();
 			animate();
 // Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:3000');
+const socket = new WebSocket('ws://'+wsServerIP+':3000');
 
 // Connection opened
 socket.addEventListener('open', function (event) {
