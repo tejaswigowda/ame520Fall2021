@@ -6,6 +6,7 @@
 		<link type="text/css" rel="stylesheet" href="main.css">
     <script src='mappings.js'></script>
     <script src='custom.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/quaternion@1.1.0/quaternion.min.js"></script>
 	</head>
 
 	<body>
@@ -50,21 +51,6 @@
 			init();
 			animate();
 
-/*
-      var wsServerIP = "127.0.0.1";
-// Create WebSocket connection.
-const socket = new WebSocket('ws://'+wsServerIP+':3000');
-
-// Connection opened
-socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
-});
-
-// Listen for messages
-socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
-});
-*/
 function connect() {
   var ws = new WebSocket('ws://localhost:3000');
   ws.onopen = function() {
@@ -75,7 +61,13 @@ function connect() {
   };
 
   ws.onmessage = function(e) {
-    console.log('Message:', e.data);
+   // console.log('Message:', e.data);
+    try{
+      var obj = JSON.parse(e.data);
+      handleWSMessage(obj);
+    }
+    catch(e){
+    }
   };
 
   ws.onclose = function(e) {
@@ -214,7 +206,7 @@ connect();
 
 				// stats
 				stats = new Stats();
-				container.appendChild( stats.dom );
+	//			container.appendChild( stats.dom );
 
 			}
 
@@ -394,6 +386,6 @@ function dothistoInit()
 }
 
 		</script>
-
+    <button onclick='calibrate()' style='position:fixed;bottom:5px;right:5px'> Set T-Pose </button>
 	</body>
 </html>
