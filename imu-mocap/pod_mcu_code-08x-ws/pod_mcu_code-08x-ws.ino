@@ -23,8 +23,9 @@ TFT_eSPI *tft;
 #include "SparkFun_BNO080_Arduino_Library.h" // Click here to get the library: http://librarymanager/All#SparkFun_BNO080
 BNO080 myIMU;
 
-const char* ssid = "NETGEAR31";
-const char* password = "fluffywind2904";
+const char* ssid = "AMEIoT";
+const char* password = "ameclass";
+String serverIP = "192.168.2.6";
 
 String mac_address;
 
@@ -154,7 +155,7 @@ void setup() {
   delay(500);
   // server address, port and URL
 
-  webSocket.begin("192.168.0.193", 3000, "/");
+  webSocket.begin(serverIP, 3000, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);
