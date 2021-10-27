@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - FBX loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
     <script src='mappings.js'></script>
+    <script src='custom.js'></script>
 	</head>
 
 	<body>
     <script>
-      var wsServerIP = "127.0.0.1";
       var hash = window.location.hash.replace("#","");
       var args = hash.split(",")
       var fbxfile = args[0] || "ybot.fbx"
@@ -50,6 +49,9 @@
 
 			init();
 			animate();
+
+/*
+      var wsServerIP = "127.0.0.1";
 // Create WebSocket connection.
 const socket = new WebSocket('ws://'+wsServerIP+':3000');
 
@@ -62,6 +64,34 @@ socket.addEventListener('open', function (event) {
 socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
 });
+*/
+function connect() {
+  var ws = new WebSocket('ws://localhost:3000');
+  ws.onopen = function() {
+    // subscribe to some channels
+    ws.send(JSON.stringify({
+        //.... some message the I must send when I connect ....
+    }));
+  };
+
+  ws.onmessage = function(e) {
+    console.log('Message:', e.data);
+  };
+
+  ws.onclose = function(e) {
+    console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+    setTimeout(function() {
+      connect();
+    }, 1000);
+  };
+
+  ws.onerror = function(err) {
+    console.error('Socket encountered error: ', err.message, 'Closing socket');
+    ws.close();
+  };
+}
+
+connect();
 
 			function init() {
 
